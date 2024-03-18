@@ -74,4 +74,41 @@ sudo systemctl start prometheus
 sudo systemctl status prometheus
 sudo systemctl status prometheus
 ```
-
+# node_exporter installing on other instance and connect with prometheus server 
+```
+sudo wget https://github.com/prometheus/node_exporter/releases/download/v1.7.0/node_exporter-1.7.0.linux-amd64.tar.gz
+```
+```
+sudo tar xvzf node_exporter-1.7.0.linux-amd64.tar.gz
+cd node_exporter-1.7.0.linux-amd64
+```
+### now add node_exporter in /usr/local/bin/
+```
+sudo mv node_exporter /usr/local/bin/
+node_exporter --version
+```
+```
+sudo groupadd node_exporter
+sudo usermod -s  /sbin/nologin -g node_exporter node_exporter 
+```
+```
+sudo chown node_exporter:node_exporter /usr/local/bin/node_exporter
+```
+```
+cd /etc/systemd/system
+sudo touch node_exporter.service
+```
+```
+put data
+```
+```
+sudo systemctl daemon reload 
+sudo systemctl start node_exporter
+sudo systemctl enable node_exporter
+sudo systemctl status node_exporter
+```
+### now add the node_exporter with prometheus server so go  prometheus server and 
+```
+sudo vim/etc/prometheus/prometheus.yaml
+```
+and add the node_exportet in target and sanve file then restart prometheus service 
