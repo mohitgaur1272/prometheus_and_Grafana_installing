@@ -21,7 +21,8 @@ cd  prometheus-2.51.0-rc.0.linux-amd64
 
 ### move this file in /usr/bin/ folder for make executable any where in terminal 
 ```
-sudo mv prometheus promtool /usr/bin/
+sudo mv promtool /var/local/bin/promtool
+sudo mv prometheus /usr/local/bin/
 ```
 ### now create prometheus user and group for run this service by only this user
 ```
