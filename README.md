@@ -11,23 +11,24 @@ tar xvzf prometheus-2.51.0-rc.0.linux-amd64.tar.gz
 ```
 cd  prometheus-2.51.0-rc.0.linux-amd64
 ```
-### if you are use prometheus for testing so run this command 
+## if you are use prometheus for testing so run this command 
 ```
 ./prometheus
 ```
 ### and paste your ```public_ip:9090``` on browser this is by defauly port of prometheus
 
-## and if you are use this tool in industry so follow given steps
+# and if you are use this tool in industry so follow given steps
 
 ### move this file in /usr/bin/ folder for make executable any where in terminal 
 ```
+sudo mkdir /var/local/bin 
 sudo mv promtool /var/local/bin/promtool
 sudo mv prometheus /usr/local/bin/
 ```
 ### now create prometheus user and group for run this service by only this user
 ```
 sudo groupadd prometheus
-sudo useradd -s /sbin/login/ -g prometheus prometheus   
+sudo useradd -s /bin/bash -g prometheus prometheus 
 ```
 now create folder for save data of server metrix 
 ```
@@ -45,11 +46,7 @@ sudo chown -R prometheus:prometheus /var/local/bin/promtool
 ### now if you want to start and enable by this command systemctl prometheus like docker and apache2 so you have to do create 
 ### file in systemd folder so run this command 
 ```
-cd /etc/systemd/system
-sudo touch prometheus.service
-sudo vim prometheus.service
-```
-```
+sudo bash -c 'cat > /etc/systemd/system/prometheus.service <<EOF
 [Unit]
 Description=Prometheus Monitoring
 Wants=network-online.target
@@ -57,22 +54,23 @@ After=network-online.target
 
 [Service]
 User=prometheus
-group=prometheus
+Group=prometheus
 Restart=on-failure
 
 # Location of the prometheus executable
-ExecStart=/usr/local/bin/prometheus \
-  --config.file=/etc/prometheus/prometheus.yml \
+ExecStart=/usr/local/bin/prometheus \\
+  --config.file=/etc/prometheus/prometheus.yml \\
   --storage.tsdb.path=/var/lib/prometheus/
 
 [Install]
 WantedBy=multi-user.target
+EOF'
 ```
 ### now run this commnad for undestand to system-daemon that i have added one more service so run this 
 ```
-sudo system daemon reload
+sudo systemctl daemon-reload
 sudo systemctl start prometheus
-sudo systemctl status prometheus
+sudo systemctl enable prometheus
 sudo systemctl status prometheus
 ```
 # node_exporter installing on other instance and connect with prometheus server 
