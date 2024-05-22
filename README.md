@@ -19,7 +19,7 @@ cd  prometheus-2.51.0-rc.0.linux-amd64
 
 # and if you are use this tool in industry so follow given steps
 
-### move this file in /usr/bin/ folder for make executable any where in terminal 
+### move this file in /usr/local/bin/ folder for make executable any where in terminal 
 ```
 sudo mkdir /var/local/bin 
 sudo mv promtool /var/local/bin/promtool
