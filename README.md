@@ -88,17 +88,33 @@ node_exporter --version
 ```
 ```
 sudo groupadd node_exporter
-sudo usermod -s  /sbin/nologin -g node_exporter node_exporter 
+
+sudo useradd -r -g node_exporter -s /sbin/nologin node_exporter
 ```
 ```
 sudo chown node_exporter:node_exporter /usr/local/bin/node_exporter
 ```
+put this data on file 
 ```
-cd /etc/systemd/system
-sudo touch node_exporter.service
+sudo bash -c 'cat > /etc/systemd/system/node_exporter.service <<EOF 
+[Unit]
+Description=Node Exporter
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User=node_exporter
+Group=node_exporter
+Type=simple
+ExecStart=/usr/local/bin/node_exporter
+
+[Install]
+WantedBy=multi-user.target
+EOF'
+
 ```
 ```
-put data
+sudo cat /etc/systemd/system/node_exporter.service
 ```
 ```
 sudo systemctl daemon reload 
@@ -106,7 +122,7 @@ sudo systemctl start node_exporter
 sudo systemctl enable node_exporter
 sudo systemctl status node_exporter
 ```
-### now add the node_exporter with prometheus server so go  prometheus server and 
+### now add the node_exporter with prometheus server so go  prometheus server and
 ```
 sudo vim/etc/prometheus/prometheus.yaml
 ```
