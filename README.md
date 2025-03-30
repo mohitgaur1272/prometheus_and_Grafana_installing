@@ -129,8 +129,7 @@ sudo vim/etc/prometheus/prometheus.yml
 ### add data like this 
 ```
 static_configs:
-     - targets: ["localhost:9090"]
-     - targets: ["<node exportar_ip>:9100"]
+  - targets: ["localhost:9100","15.206.203.73:9100","3.110.114.103:9100"]
 ```
 and add the node_exportet in target and sanve file then restart prometheus service 
 ### on our browser and access
