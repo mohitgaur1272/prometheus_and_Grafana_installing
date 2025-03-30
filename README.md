@@ -124,6 +124,16 @@ sudo systemctl status node_exporter
 ```
 ### now add the node_exporter with prometheus server so go  prometheus server and
 ```
-sudo vim/etc/prometheus/prometheus.yaml
+sudo vim/etc/prometheus/prometheus.yml
+```
+### add data like this 
+```
+static_configs:
+     - targets: ["localhost:9090"]
+     - targets: ["<node exportar_ip>:9100"]
 ```
 and add the node_exportet in target and sanve file then restart prometheus service 
+### on our browser and access
+```
+<public-ip:9090>
+```
